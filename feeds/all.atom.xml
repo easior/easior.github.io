@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wunderland</title><link href="http://127.0.0.1/~junqihu/pelican/" rel="alternate"></link><link href="http://127.0.0.1/~junqihu/pelican/feeds/all.atom.xml" rel="self"></link><id>http://127.0.0.1/~junqihu/pelican/</id><updated>2014-10-13T10:20:00+08:00</updated><entry><title>利用 Pelican 搭建静态博客</title><link href="http://127.0.0.1/~junqihu/pelican/my-super-post.html" rel="alternate"></link><updated>2014-10-13T10:20:00+08:00</updated><author><name>Easior Lars</name></author><id>tag:127.0.0.1,2014-10-13:~junqihu/pelican/my-super-post.html</id><summary type="html">&lt;h1&gt;一、静态网页生成器简介&lt;/h1&gt;
+&lt;p&gt;1、Jekyll 是一个静态 Blog 站点生成器，不管是用在个人、项目还是组织站点，都是很棒的，你可以把 Jekyll 想象成一个基于文件的 CMS，没什么复杂性！ Jekyll 首先会获得你的内容，然后开始渲染 Markdown 和 Liquid 模板，接下来会生成一个完整的可以被用在 Apache、Nginx 或者是其它 Web 服务器上的静态网站。 Jekyll 是 GitHub Pages 后面的驱动器，你可以使用这个驱动器托管来自你的 GitHub 仓库的站点。官方网页 http://jekyllrb.com/&lt;/p&gt;
+&lt;p&gt;2、Pelican 是一个用 Python 语言编写的静态网站生成器，支持使用 restructuredText 和 Markdown 写文章，配置灵活，扩展性强。目前 Pelican 已发布3.2.2版本，有许多优秀的主题和插件可供使用。Pelican 的 Github 地址是： https://github.com/getpelican/pelican&lt;/p&gt;
+&lt;p&gt;3、Hexo 是一个快速的、强大的 Blog 框架，主要是由 Node.js 构建出来的。同时支持多线程生成，上百个文件只需要花数秒中就能生成。他还支持 GitHub Flavored Markdown 和所有的 Octopress 插件和 高兼容 Jekyll/Octopress。官方网页 http://zespia.tw/hexo/&lt;/p&gt;
+&lt;p&gt;4、Harp 是一个静态 Web 服务器，可以服务 Jade、Markdown、EJS、Less、Stylus、Sass 和 CoffeeScript，就像服务 HTML、CSS 和 JavaScript 一样不需要任何配置。官方网页 http://harpjs.com/&lt;/p&gt;
+&lt;p&gt;5、Cactus 是一个简单的但是功能强大的静态站点生成器，其使用的是 Python 和 Django 模板系统。 Cactus 同样使得开发本地和部署站点到 S3 变得更加直接便捷。不管是应用在公司系统，还是组织、个人系统上，它都支持生成网站和 Blog。 Cactus 的构建理念是基于多个动态网站可以通过 JavaScript 来同时完成任务，这样的话现实网站就可以保持静态状态了。官方网页 https://github.com/koenbok/Cactus/&lt;/p&gt;
+&lt;p&gt;6、Hugo 是一个使用 Go 语言编写完成的静态站点生成器，通过不断的优化已经达到更快、使用更简单、更方便配置的状态了。 Hugo 采用了内容目录和模板，并将它们渲染成一个完全的 HTML 网站。官方网页 http://hugo.spf13.com/&lt;/p&gt;
+&lt;h1&gt;二、利用 Pelican 快速构建自己的原始博客&lt;/h1&gt;
+&lt;p&gt;首先是安装 pelican，现在 pelican 是3.3.0版本的，官方文档说明 python 版本得是2.7以上的，其中2.7支持的比较好！安装方法是：利用 pip 安装来安装 pelican&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者利用 easy_install 来安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;easy_install pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者从 github 下载 pelican 源码到本地安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;path-to-Pelican-source
+&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 virtualenv 工具更加方便&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;virtualenv ~/virtualenvs/pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/virtualenvs/pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;. bin/activate
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;别着急开始，若习惯使用 markdown，再安装一个 Markdown 吧，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install Markdown
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;到这里， pelican 的环境部分我们已经配置完了。&lt;/p&gt;
+&lt;p&gt;现在进入博客目录，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/Developer/Pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;让我们看看 pelican 是多么神奇吧，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;根据提示回答问题，问题的答案不必太在意，因为后面可以修改配置文件。运行命令之后，在当前目录下有以下的文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;tree ~/Developer/Pelican
+yourproject/
+├── content
+│   └── &lt;span class="o"&gt;(&lt;/span&gt;pages&lt;span class="o"&gt;)&lt;/span&gt;
+├── output
+├── develop_server.sh
+├── fabfile.py
+├── Makefile
+├── pelicanconf.py       &lt;span class="c"&gt;# Main settings file&lt;/span&gt;
+└── publishconf.py       &lt;span class="c"&gt;# Settings to use when ready to publish&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;它们都是些什么呢，稍微解释一下。
+content：这里是放置博文的，例如马上就要编写 hello_python.md 文章就在这里；pages 是放置用户自己的定制些的页面的，比如 aboutme.md 等等页面；
+output：这个目录下放置的就是一会利用 pelican 生成的静态博客内容，当然是 html 的；
+pelicanconf.py：这是博客的配置文件；
+publishconf.py：这是用来发布博客的配置文件；
+Makefile：这是 make 命令的配置文件；
+develop_server.sh：这是本地服务的脚本；
+大致看完这个之后，我们可以先写一篇自己的文章瞅瞅啊，文章模板如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;nano -w ~/Developer/Pelican/content/hello_python.md
+Title: My super title
+Date: 2010-12-03 10:20
+Category: Python
+Tags: pelican, publishing
+Slug: my-super-post
+Author: Alexis Metaireau
+Summary: Short version &lt;span class="k"&gt;for &lt;/span&gt;index and feeds
+
+This is the content of my super blog post.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;以上模板中像 Title 之类的是必须的。&lt;/p&gt;
+&lt;p&gt;写完保存后，要有以下的几个命令来生成博客内容啦。利用下面的命令来生成博客站点：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;生成之后，要看下显示的效果，请用下面的命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make serve
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;至此，我们可以在本地浏览刚才建好的博客了，地址就是 http://localhost:8000。&lt;/p&gt;
+&lt;p&gt;实际上，不必每次从头生成站点，只需根据博客的修改实时的生成网页即可：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make regenerate
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;类似地，使用下面的命令实时启用网页效果&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make devserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更多命令可执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make &lt;span class="nb"&gt;help&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;想以服务的方式启动 pelican，可执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./develop_server.sh start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;停止服务则是下面的命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;./develop_server.sh stop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;是不是很方便，省去了自己写 html 的很多麻烦，专注于写作！&lt;/p&gt;
+&lt;h1&gt;三、发布到网页服务器上&lt;/h1&gt;
+&lt;p&gt;这里假设你已经配置好了网页服务器，网页服务器的地址是：http://example.com。pelican 制作的网页上传方式有很多种，这在执行 pelican-quickstart 的选项上可以看到，例如 FTP、SSH 等。这里以 SSH 为例，将 pelican 的 output 中的网页传送到 http://www.example.com 服务器的 /var/www/pelican 目录之中。在正式开始之前，需要注意，为了让 output 目录中的网页链接以及 CCS 显示正常，需要事先设置好 publishconf.py 中 SITEURL，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;nano -w publishconf.py
+&lt;span class="nv"&gt;SITEURL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;http://example.com/pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然，这个设置可以在 pelican-quickstart 执行时完成，也即&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Do you want to specify a URL prefix? e.g., http://example.com (Y/n) y
+What is your URL prefix? (see above example; no trailing slash) http://example.com/pelican
+好了，是时候发布 pelican 了：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican content -s publishconf.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;把 output 中的网页同步到网页服务器吧&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;rsync --avc --delete output/ host.example.com:/var/www/pelican/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;实际上，若在 pelican-quickstart 执行时设置了 SSH 的话，那么同步更加简单：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make rsync_upload
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;试试打开浏览器吧：http://example.com/pelican&lt;/p&gt;
+&lt;h1&gt;四、在 Github 上显示自己的博客&lt;/h1&gt;
+&lt;p&gt;什么是 github pages？http://pages.github.com/ 就是： The Automatic Page Generator can be used on GitHub to quickly create a web page for a project, user or organization。github pages 有两种 pages 模式：User、Organization Pages；每个 github.com 的账户下面只能建立一个；pages 命名必须符合这样的规则： username/username.github.com。这就是说，github.com 上每个项目的主干分支上内容被用来构建和发布页面 Project Pages 项目站点；而 gh-pages 分支用于构建和发布；如果 user/org pages 使用了独立域名，那么托管在账户下的所有 project pages 将使用相同的域名进行重定向，除非 project pages 使用了自己的独立域名；如果没有使用独立域名， project pages 将通过子路径的形式提供服务 username.github.com/projectname；另外，自定义404页面只能在独立域名下使用，否则会使用 User Pages 404。&lt;/p&gt;
+&lt;p&gt;接下来就是上传博客的时候了，要将生成的站点内容上传到刚才建好的 example.github.com 的工程 master 主干中：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git init
+&lt;span class="nv"&gt;$ &lt;/span&gt;git remote origin https://github.com/username/username.github.com.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;生成 .git 的目录，此时我们上传到 github 上面：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;nano -w .gitignore
+cache/*
+output/*
+*.py&lt;span class="o"&gt;[&lt;/span&gt;cod&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip freeze &amp;gt; requirements.txt
+&lt;span class="nv"&gt;$ &lt;/span&gt;git add .
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -m &lt;span class="s2"&gt;&amp;quot;update&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push origin master
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;此时可能需要输入账户和密码，稍后说明如何不需要每次 push都输入账户和密码。上传之后，我们打开 github的这个项目，点击右侧的setting项，在下面可以看到github正在生成你的站点，稍等10多分钟，在浏览器中输入example.github.com，哈哈见证奇迹的时刻到了！&lt;/p&gt;
+&lt;h1&gt;五、插件与主题管理&lt;/h1&gt;
+&lt;p&gt;1、pelican 的插件
+首先，可从 https://github.com/getpelican/pelican-plugins 获得插件。使用插件有两种方法：一、若插件已在 PYTHONPATH，则只需使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;PLUGINS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;package.myplugin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;package&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;myplugin&lt;/span&gt;
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;myplugin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;二、若插件不在 PYTHONPATH 中，则可通过 PLUGIN_PATH 指定路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;PLUGIN_PATHS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;plugins&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/var/lib/pelican-plugins&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;myplugin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2、pelican 的主题&lt;/p&gt;
+&lt;p&gt;列出已安装主题&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-themes -l
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-themes -lv
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装已下载的主题&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/getpelican/pelican-themes.git
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;pelican-themes
+&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-themes -i two-colum
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用已安装主题，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;THEME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;two-colum&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用未安装的主题，可以采用相对路径或者绝对路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;THEME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/home/username/pelican-themes/chunk&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;删除已安装主题&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican -r two-colum
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更多设置请参看 http://docs.getpelican.com/&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category></entry></feed>
